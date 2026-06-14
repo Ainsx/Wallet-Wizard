@@ -1,0 +1,30 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Wallet Wizard Backend",
+  "homepage": "https://github.com/Ainsx/Wallet-Wizard#readme",
+  "bugs": {
+    "url": "https://github.com/Ainsx/Wallet-Wizard/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ainsx/Wallet-Wizard.git"
+  },
+  "license": "ISC",
+  "author": "Daekeun Kim",
+  "type": "commonjs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server",
+    "dev": "nodemon server"
+
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
