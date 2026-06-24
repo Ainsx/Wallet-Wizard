@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict X3AyvJtlF9gpX1jJ3f8s4MnenWuuj3Imh9TLhmKeg1CvcqXdcVRTo9myl6V78SB
+\restrict zRmHavZhMnHlGGBaO8jxOqwBdPgocjxfuuUpDo7wDpDLWBSPQMjVThyNcMKyGN7
 
 -- Dumped from database version 18.4
 -- Dumped by pg_dump version 18.4
@@ -52,7 +52,8 @@ CREATE TABLE public.app_user (
     display_name text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    profile_picture text
 );
 
 
@@ -64,14 +65,15 @@ ALTER TABLE public.app_user OWNER TO postgres;
 
 CREATE TABLE public.budget (
     id uuid NOT NULL,
-    user_id integer NOT NULL,
     category_id uuid NOT NULL,
     name text NOT NULL,
     amount integer NOT NULL,
     period text NOT NULL,
     start_date timestamp without time zone NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone
+    updated_at timestamp without time zone NOT NULL,
+    user_id uuid NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -86,7 +88,8 @@ CREATE TABLE public.category (
     name text NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    user_id uuid NOT NULL
 );
 
 
@@ -98,8 +101,8 @@ ALTER TABLE public.category OWNER TO postgres;
 
 CREATE TABLE public.recurring_transaction (
     id uuid NOT NULL,
-    category_id uuid,
-    account_id uuid,
+    category_id uuid NOT NULL,
+    account_id uuid NOT NULL,
     name text NOT NULL,
     amount integer NOT NULL,
     frequency text NOT NULL,
@@ -119,10 +122,10 @@ ALTER TABLE public.recurring_transaction OWNER TO postgres;
 
 CREATE TABLE public.transaction (
     id uuid NOT NULL,
-    user_id uuid,
+    user_id uuid NOT NULL,
     name text NOT NULL,
     category_id uuid NOT NULL,
-    account_id uuid,
+    account_id uuid NOT NULL,
     amount integer NOT NULL,
     date date NOT NULL,
     description text NOT NULL,
@@ -146,7 +149,7 @@ COPY public.account (id, user_id, name, type, balance, created_at, updated_at, d
 -- Data for Name: app_user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.app_user (id, email, password_hash, display_name, created_at, updated_at, deleted_at) FROM stdin;
+COPY public.app_user (id, email, password_hash, display_name, created_at, updated_at, deleted_at, profile_picture) FROM stdin;
 \.
 
 
@@ -154,7 +157,7 @@ COPY public.app_user (id, email, password_hash, display_name, created_at, update
 -- Data for Name: budget; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.budget (id, user_id, category_id, name, amount, period, start_date, created_at, updated_at) FROM stdin;
+COPY public.budget (id, category_id, name, amount, period, start_date, created_at, updated_at, user_id, deleted_at) FROM stdin;
 \.
 
 
@@ -162,7 +165,7 @@ COPY public.budget (id, user_id, category_id, name, amount, period, start_date, 
 -- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.category (id, name, created_at, updated_at, deleted_at) FROM stdin;
+COPY public.category (id, name, created_at, updated_at, deleted_at, user_id) FROM stdin;
 \.
 
 
@@ -255,6 +258,46 @@ ALTER TABLE ONLY public.budget
 
 
 --
+-- Name: budget budget_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.budget
+    ADD CONSTRAINT budget_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.app_user(id);
+
+
+--
+-- Name: recurring_transaction recurring_transaction_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recurring_transaction
+    ADD CONSTRAINT recurring_transaction_account_id_fkey FOREIGN KEY (account_id) REFERENCES public.account(id);
+
+
+--
+-- Name: recurring_transaction recurring_transaction_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recurring_transaction
+    ADD CONSTRAINT recurring_transaction_category_id_fkey FOREIGN KEY (category_id) REFERENCES public.category(id);
+
+
+--
+-- Name: transaction transaction_account_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transaction
+    ADD CONSTRAINT transaction_account_id_fkey FOREIGN KEY (account_id) REFERENCES public.account(id);
+
+
+--
+-- Name: transaction transaction_app_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.transaction
+    ADD CONSTRAINT transaction_app_user_fkey FOREIGN KEY (account_id) REFERENCES public.app_user(id);
+
+
+--
 -- Name: transaction transaction_category_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -266,5 +309,5 @@ ALTER TABLE ONLY public.transaction
 -- PostgreSQL database dump complete
 --
 
-\unrestrict X3AyvJtlF9gpX1jJ3f8s4MnenWuuj3Imh9TLhmKeg1CvcqXdcVRTo9myl6V78SB
+\unrestrict zRmHavZhMnHlGGBaO8jxOqwBdPgocjxfuuUpDo7wDpDLWBSPQMjVThyNcMKyGN7
 
