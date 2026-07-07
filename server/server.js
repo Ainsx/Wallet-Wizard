@@ -14,7 +14,6 @@ const pool = new Pool({
   database: process.env.DB_DATABASE,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
-  ssl: {rejectUnauthorized: false}
 });
 
 app.use(cors());
@@ -30,7 +29,8 @@ app.get("/api/transaction", async (req, res) => {
   try {
     client = await pool.connect();
     console.log('Got a connection from the pool');
-    const resp = await client.query('SELECT * FROM transaction');
+    const resp =
+     await client.query('SELECT t.*, c.name as category_name FROM transaction t JOIN category c ON t.category_id = c.id');
     res.json(resp.rows);
   } catch (err) {
     console.error(err);
