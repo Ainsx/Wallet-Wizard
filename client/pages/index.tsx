@@ -1,21 +1,18 @@
 import React, {useEffect, useState} from 'react';
-
-function index() {
-    const [message, setMessage] = useState("Loading...");
-
-    useEffect(() => {
-        fetch("http://localhost:3100/api/home")
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-            setMessage(data.message);
-        });
-    }, []);
+import TransactionList from "../components/TransactionList"
+import CategoryList from '@/components/CategoryList';
+import Title from "../components/Title";
+function Index() {
   return (
-    <div>{message}</div>
-  )
-
+    <div>
+      <Title />
+    <CategoryList/> <br/>
+    <TransactionList/> <br />
+    </div>
+  );
 }
 
-export default index
+export default Index;
+
+
 
