@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict R6bNGhDpKtyrSuCutOBrgBO86L0hC0STNYl4kMtiLwtBU7iga5uoI4bn395pwdx
+\restrict bjGa10R8zrbhrdr7z5r4pBB5k3ZJJaVXaavlRhT39TVeMehgoRTC1eYIe4Q9npj
 
 -- Dumped from database version 18.4
 -- Dumped by pg_dump version 18.4
@@ -168,9 +168,9 @@ COPY public.budget (id, category_id, name, amount, period, start_date, created_a
 --
 
 COPY public.category (id, name, created_at, updated_at, deleted_at, user_id) FROM stdin;
-e3238456-9810-4494-ac13-d41e6210ba07	rent	2026-07-07 03:08:51.013494	2026-07-07 03:08:51.013494	\N	36f4727a-b84c-4d3a-a1ad-a0f01191694b
 7b370a95-8a71-4150-afc3-2cef5d9f2bf8	food	2026-07-07 03:32:02.923315	2026-07-07 03:32:02.923315	\N	36f4727a-b84c-4d3a-a1ad-a0f01191694b
 bb97d9a5-a6be-46ef-a327-3959fd22ff35	grocery	2026-07-07 03:40:43.044592	2026-07-07 03:40:43.044592	\N	36f4727a-b84c-4d3a-a1ad-a0f01191694b
+e3238456-9810-4494-ac13-d41e6210ba07	rent	2026-07-07 03:08:51.013494	2026-07-07 03:08:51.013494	2026-07-07 13:30:33.386981	36f4727a-b84c-4d3a-a1ad-a0f01191694b
 \.
 
 
@@ -188,8 +188,8 @@ COPY public.recurring_transaction (id, category_id, account_id, name, amount, fr
 
 COPY public.transaction (id, user_id, name, category_id, account_id, amount, date, description, created_at, updated_at, deleted_at) FROM stdin;
 d19593cf-1596-4660-9ff2-a4102cb0b85e	36f4727a-b84c-4d3a-a1ad-a0f01191694b	coffee	7b370a95-8a71-4150-afc3-2cef5d9f2bf8	7fd5f1fd-211b-4593-8c12-75afe8097c89	500	2026-07-07	starbucks regular black	2026-07-07 03:34:16.466121	2026-07-07 03:34:16.466121	\N
-5d569e06-c0be-4b6a-8dd5-3d0e50b35a80	36f4727a-b84c-4d3a-a1ad-a0f01191694b	july rent	e3238456-9810-4494-ac13-d41e6210ba07	7fd5f1fd-211b-4593-8c12-75afe8097c89	150000	2026-07-07	housing rent for july	2026-07-07 03:25:05.757289	2026-07-07 03:25:05.757289	\N
 fdd2fa2b-df9d-4f63-b29f-c35b1af2cc36	36f4727a-b84c-4d3a-a1ad-a0f01191694b	costco	bb97d9a5-a6be-46ef-a327-3959fd22ff35	7fd5f1fd-211b-4593-8c12-75afe8097c89	25000	2026-07-07	grocery run at costco	2026-07-07 03:41:28.212405	2026-07-07 03:41:28.212405	\N
+5d569e06-c0be-4b6a-8dd5-3d0e50b35a80	36f4727a-b84c-4d3a-a1ad-a0f01191694b	july rent	e3238456-9810-4494-ac13-d41e6210ba07	7fd5f1fd-211b-4593-8c12-75afe8097c89	150000	2026-07-07	housing rent for july	2026-07-07 03:25:05.757289	2026-07-07 03:25:05.757289	2026-07-07 09:53:35.804718
 \.
 
 
@@ -317,5 +317,5 @@ ALTER TABLE ONLY public.transaction
 -- PostgreSQL database dump complete
 --
 
-\unrestrict R6bNGhDpKtyrSuCutOBrgBO86L0hC0STNYl4kMtiLwtBU7iga5uoI4bn395pwdx
+\unrestrict bjGa10R8zrbhrdr7z5r4pBB5k3ZJJaVXaavlRhT39TVeMehgoRTC1eYIe4Q9npj
 
